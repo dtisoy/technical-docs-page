@@ -22,6 +22,7 @@
                 <li><a class="nav-link" href="#Get_the_app">Get the app</a></li>
                 <li><a class="nav-link" href="#Build_the_app's_container_image">Build the app's container image</a></li>
                 <li><a class="nav-link" href="#Start_an_app_container">Start an app container</a></li>
+                <li><a class="nav-link" href="#Reference">Reference</a></li>
             </ul>
         </nav>
 
@@ -67,7 +68,8 @@
             <article>
                 <p>When running a container, it uses an isolated filesystem. This custom filesystem is provided by a container image. Since the image contains the container’s filesystem, it must contain everything needed to run an application - all dependencies, configurations, scripts, binaries, etc. The image also contains other configuration for the container, such as environment variables, a default command to run, and other metadata.</p>
                 <p>You’ll dive deeper into images later on in this guide, covering topics such as layering, best practices, and more.</p>
-                <blockquote><p>note</p>
+                <blockquote>
+                    <p>note</p>
                     <p>If you’re familiar with <code class="highlight">chroot</code>, think of a container as a extended version of <code class="highlight">chroot</code>. The filesystem is simply comming from the image. But, a container adds aditional isolation not available when simply using chroot.</p>
                 </blockquote>
             </article>
@@ -190,6 +192,13 @@ EXPOSE 3000</code></pre>
             </article>
         </section>
 
+        <section class="main-section" id="Reference">
+            <header>
+                <h3>Reference</h3>
+            </header>
+            <p>All of the content in this page is based in the <a href="https://docs.docker.com/get-started/">Docker getting started</a> documentation</p>
+            <i>dtisoy | jun 2023</i>
+        </section>
         </main>
     </body>
 </html>
