@@ -1,8 +1,9 @@
 :root {
     --highlight-color: #0055BD;
-    --background-color: #f8f9fc; 
-    --code-background-color: #F9F0FA;
+    --background-color: #fff; 
+    --code-background-color: #F7F7F7;
     --text-color: #4d4e53;
+    --highlight-background: #E5F2FC;
 }
 
 html {
@@ -23,13 +24,14 @@ body {
 #main-doc {
     max-width: 1000px;
     font-size: 0.95rem;
-    line-height: 1.2rem;
+    line-height: 1.5rem;
     padding: 0 10px;
 }
 
 nav ul {
    font-size: 0.9rem; 
    list-style: none;
+   padding: 0;
 }
 
 nav a{
@@ -37,17 +39,33 @@ nav a{
     color: var(--text-color);
 }
 
+nav li {
+    border-bottom: 1px solid var(--text-color);
+    padding: 10px;
+}
+
+nav header {
+    padding-top: 10px;
+}
+
+nav h1 {
+    font-weight: lighter;
+    padding-left: 10px;
+}
+
 @media(min-width: 1024px){
     nav {
         position: fixed;
         left: 0px;
         top: 0px;
+        overflow-y: auto;
+        overflow-x: hidden;
     }
     nav ul {
-        height: 40vh;
         display: flex;
         flex-direction: column;
         justify-content:space-between;
+        height: 300px;
     }
     #main-doc{
         margin-left: 300px;
@@ -59,3 +77,34 @@ img {
     width: 60%;
     height: auto;
 }
+
+.main-section {
+    padding-top: 10px;
+}
+
+.block-code {
+    background-color: var(--code-background-color);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+p > code {
+    padding: 0 5px;
+}
+
+.no-hl {
+    color: var(--text-color);
+}
+
+blockquote {
+    background-color: var(--highlight-background);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+blockquote > p:first-of-type {
+    color: var(--highlight-color);
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
