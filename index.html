@@ -99,7 +99,7 @@
                 <ol>
                     <li>
                         <p>Clone the getting-started repository using the following command:</p>
-                        <div><code class="highlight">$ git clone https://github.com/docker/getting-started.git</code></div>
+                        <div class="block-code"><code class="highlight"><span class="no-hl">$</span> git clone https://github.com/docker/getting-started.git</code></div>
                     </li>
                     <li>
                         <p>View the contents of the cloned repository. Inside the <code class="highlight">getting-started/app</code> directory you should see <code class="highlight">package.json</code> and two subdirectories (<code class="highlight">src</code> and <code class="highlight">spec</code>).
@@ -122,17 +122,17 @@
                         <p>In the <code class="highlight">app</code> directory, the same location as the <code class="highlight">package.json</code> file, create a file named <code class="highlight">Dockerfile</code>. You can use the following commands below to create a Dockerfile based on Linux/Mac.</p>
                         <p>In the terminal, run the following commands listed below</p>
                         <p>Change directory to the <code class="highlight">app</code> directory. Replace <code class="highlight">/path/to/app</code> with the path to you <code class="highlight">getting-started/app</code> directory.</p>
-                        <div>
-                            <code class="highlight">$ cd /path/to/app</code>
+                        <div class="block-code">
+                            <code class="highlight"><span class="no-hl">$</span> cd /path/to/app</code>
                         </div>
                         <p>Create an empty file named <code class="highlight">Dockerfile</code>.</p>
-                        <div>
-                            <code class="highlight">$ touch Dockerfile</code>
+                        <div class="block-code">
+                            <code class="highlight"><span class="no-hl">$</span> touch Dockerfile</code>
                         </div>
                     </li>
                     <li>
                         <p>Using a text editor or code editor, add the following contents to the Dockerfile:</p>
-                        <div>
+                        <div class="block-code">
                            <pre><code class="highlight"># syntax=docker/dockerfile:1
    
 FROM node:18-alpine
@@ -146,12 +146,12 @@ EXPOSE 3000</code></pre>
                     <li>
                         <p>Build the container image using the following commands:</p>
                         <p>In the terminal, change directory to the <code class="highlight">getting-started/app</code> directory. Replace <code class="highlight">/path/to/app</code> with the path to your <code class="highlight">getting-started/app</code> directory.
-                        <div>
-                            <code class="highlight">$ cd /path/to/app</code>
+                        <div class="block-code">
+                            <code class="highlight"><span class="no-hl">$</span> cd /path/to/app</code>
                         </div>
                         <p>Build the container image.</p>
-                        <div>
-                            <code class="highlight">$ docker build -t getting-started .</code>
+                        <div class="block-code">
+                            <code class="highlight"><span class="no-hl">$</span> docker build -t getting-started .</code>
                         </div>
                         <p>The <code class="highlight">docker build</code> command uses the Dockerfile to build a new container image. You might have noticed that Docker downloaded a lot of “layers”. This is because you instructed the builder that you wanted to start from the <code class="highlight">node:18-alpine</code> image. But, since you didn’t have that on your machine, Docker needed to download the image.</p>
                         <p>After Docker downloaded the image, the instructions from the Dockerfile copied in your application and used <code class="highlight">yarn</code> to install your application’s dependencies. The <code class="highlight">CMD</code> directive specifies the default command to run when starting a container from this image.</p>
@@ -171,8 +171,8 @@ EXPOSE 3000</code></pre>
                 <ol>
                     <li>
                         <p>Start your container using the <code class="highlight">docker run</code> command and specify the name of the image you just created</p>
-                        <div>
-                            <code class="highlight">$ docker run -dp 127.0.0.1:3000:3000 getting-started</code>
+                        <div class="block-code">
+                            <code class="highlight"><span class="no-hl">$</span> docker run -dp 127.0.0.1:3000:3000 getting-started</code>
                         </div>
                         <p>The <code class="highlight">-f</code> flag (short for <code class="highlight">--detached</code>) runs the container in the background. The <code class="highlight">-p</code> flag (short for <code class="highlight">--publish</code>) creates a port mapping between the host and the container. The <code class="highlight">-p</code> flag take a string value in the format of <code class="highlight">HOST:CONTAINER</code>, where the <code class="highlight">HOST</code> is the address on the host, and <code class="highlight">CONTAINER</code> is the port on the container. The command shown here publishes the container’s port 3000 to <code class="highlight">127.0.0.1:3000</code> (<code class="highlight">localhost:3000</code>) on the host. Without the port mapping, you wouldn’t be able to access the application from the host.</p>
                     </li>
