@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
     <head>
         <meta charset="utf-8" >
         <meta name="viewport" content="width=device-width, initial-scale=1.0" >
@@ -8,10 +9,172 @@
         <link rel="stylesheet" href="styles.css" >
         <title>Technical Documentation Page</title>
     </head>
+
     <body>
+
         <main id="main-doc">
             <!-- page's main content (technical doc) -->
-        <section class="main-section"></section>
+        <section class="main-section">
+            <header id="Overview">
+                <h1>Overview</h1>
+            </header>
+            <article>
+                <p>Welcome! We’re excited that you want to learn Docker.</p>
+                <p>This guide contains step-by-step instructions on how to get started with Docker. Some of the things you’ll learn and do in this guide are:</p>
+                <ul>
+                    <li>Build and run an image as a container.</li>
+                    <li>Share images using Docker Hub</li>
+                    <li>Deploy Docker applications using multiple containers with a database.</li>
+                    <li>Run applications using Docker Compose.</li>
+                </ul>
+                <p>Before you get to the hands on part of the guide, you should learn about containers and images.</p>
+            </article>
+        </section>
+
+        <section class="main-section">
+
+            <header id="What_is_a_container?">
+                <h2>What is a container?</h2>
+            </header>
+            <article>
+            <p>Simply put, a container is a sandboxed process on your machine that is isolated from all other processes on the host machine. That isolation leverages kernel namespaces and cgroups, features that have been in Linux for a long time. Docker has worked to make these capabilities approachable and easy to use. To summarize, a container:</p>
+            <ul>
+                <li>Is a runnable instance of an image. You can create, start, stop, move, or delete a container using the DockerAPI or CLI.</li>
+                <li>Can be run on local machines, virtual machines or deployed to the cloud.</li>
+                <li>Is portable (can be run on any OS).</li>
+                <li>Is isolated from other containers and runs its own software, binaries, and configurations.</li>
+            </ul>
+            </article>
+        </section>
+
+        <section class="main-section">
+            <header id="What_is_a_container_image?">
+                <h2>What is a container image?</h2>
+            </header>
+            <article>
+                <p>When running a container, it uses an isolated filesystem. This custom filesystem is provided by a container image. Since the image contains the container’s filesystem, it must contain everything needed to run an application - all dependencies, configurations, scripts, binaries, etc. The image also contains other configuration for the container, such as environment variables, a default command to run, and other metadata.</p>
+                <p>You’ll dive deeper into images later on in this guide, covering topics such as layering, best practices, and more.</p>
+                <blockquote><p>note</p>
+                    <p>If you’re familiar with <code class="highlight">chroot</code>, think of a container as a extended version of <code class="highlight">chroot</code>. The filesystem is simply comming from the image. But, a container adds aditional isolation not available when simply using chroot.</p>
+                </blockquote>
+            </article>
+        </section>
+
+        <section class="main-section">
+            <header id="Containerize_an_application">
+                <h1>Containerize an application</h1>
+            </header>
+            <article>
+                <p>For the rest of this guide, you’ll be working with a simple todo list manager that runs on Node.js. If you’re not familiar with Node.js, don’t worry. This guide doesn’t require any prior experience with JavaScript.</p>
+                <p>To complete this guide, you’ll need the following:</p>
+                <ul>
+                    <li>Docker running locally. Follow the instructions to download and install Docker.</li>
+                    <li>A Git client</li>
+                    <li>An IDE or a text editor to edit files. Docker recommends using Visual Studio Code.</li>
+                    <li>A conceptual understanding of containers and images.</li>
+                </ul>
+            </article>
+        </section>
+
+
+        <section class="main-section">
+            <header id="Get_the_app">
+                <h2>Get the app</h2>
+            </header>
+            <article>
+                <p>Before you can run the application, you need to get the application source code onto your machine.</p>
+                <ol>
+                    <li>
+                        <p>Clone the getting-started repository using the following command:</p>
+                        <div><code class="highlight">$ git clone https://github.com/docker/getting-started.git</code></div>
+                    </li>
+                    <li>
+                        <p>View the contents of the cloned repository. Inside the <code class="highlight">getting-started/app</code> directory you should see <code class="highlight">package.json</code> and two subdirectories (<code class="highlight">src</code> and <code class="highlight">spec</code>).
+                        <img src="https://docs.docker.com/get-started/images/ide-screenshot.png" alt="example of a package.json script in visual studio code">
+                    </li>
+                </ol>
+            </article>
+        </section>
+
+        <section class="main-section">
+            <header id="Build_the_app's_container_image">
+                <h2>Build the app's container image</h2>
+            </header>
+            <article>
+                <p>To build the container image, you’ll need to use a <code class="highlight">Dockerfile</code>. A Dockerfile is simply a text-based file with no file extension that contains a script of instructions. Docker uses this script to build a container image.</p>
+                <ol>
+                    <li>
+                        <p>In the <code class="highlight">app</code> directory, the same location as the <code class="highlight">package.json</code> file, create a file named <code class="highlight">Dockerfile</code>. You can use the following commands below to create a Dockerfile based on Linux/Mac.</p>
+                        <p>In the terminal, run the following commands listed below</p>
+                        <p>Change directory to the <code class="highlight">app</code> directory. Replace <code class="highlight">/path/to/app</code> with the path to you <code class="highlight">getting-started/app</code> directory.</p>
+                        <div>
+                            <code class="highlight">$ cd /path/to/app</code>
+                        </div>
+                        <p>Create an empty file named <code class="highlight">Dockerfile</code>.</p>
+                        <div>
+                            <code class="highlight">$ touch Dockerfile</code>
+                        </div>
+                    </li>
+                    <li>
+                        <p>Using a text editor or code editor, add the following contents to the Dockerfile:</p>
+                        <div>
+                           <pre><code class="highlight"># syntax=docker/dockerfile:1
+   
+FROM node:18-alpine
+WORKDIR /app
+COPY . .
+RUN yarn install --production
+CMD ["node", "src/index.js"]
+EXPOSE 3000</code></pre>
+                        </div>
+                    </li>
+                    <li>
+                        <p>Build the container image using the following commands:</p>
+                        <p>In the terminal, change directory to the <code class="highlight">getting-started/app</code> directory. Replace <code class="highlight">/path/to/app</code> with the path to your <code class="highlight">getting-started/app</code> directory.
+                        <div>
+                            <code class="highlight">$ cd /path/to/app</code>
+                        </div>
+                        <p>Build the container image.</p>
+                        <div>
+                            <code class="highlight">$ docker build -t getting-started .</code>
+                        </div>
+                        <p>The <code class="highlight">docker build</code> command uses the Dockerfile to build a new container image. You might have noticed that Docker downloaded a lot of “layers”. This is because you instructed the builder that you wanted to start from the <code class="highlight">node:18-alpine</code> image. But, since you didn’t have that on your machine, Docker needed to download the image.</p>
+                        <p>After Docker downloaded the image, the instructions from the Dockerfile copied in your application and used <code class="highlight">yarn</code> to install your application’s dependencies. The <code class="highlight">CMD</code> directive specifies the default command to run when starting a container from this image.</p>
+                        <p>Finally, the <code class="highlight">-t</code> flag tags your image. Think of this simply as a human-readable name for the final image. Since you named the image <code class="highlight">getting-started</code>, you can refer to that image when you run a container.</p>
+                        <p>The <code class="highlight">.</code> at the end of the <code class="highlight">docker build</code> command tells Docker that it should look for the <code class="highlight">Dockerfile</code> in the current directory</p>
+                    </li>
+                </ol>
+            </article>
+        </section>
+
+        <section class="main-section">
+            <header id="Start_an_app_container">
+                <h2>Start an app container</h2>
+            </header>
+            <article>
+                <p>Now that you have an image, you can run the application in a container. To do so, you will use the <code class="highlight">docker run</code> command.</p>
+                <ol>
+                    <li>
+                        <p>Start your container using the <code class="highlight">docker run</code> command and specify the name of the image you just created</p>
+                        <div>
+                            <code class="highlight">$ docker run -dp 127.0.0.1:3000:3000 getting-started</code>
+                        </div>
+                        <p>The <code class="highlight">-f</code> flag (short for <code class="highlight">--detached</code>) runs the container in the background. The <code class="highlight">-p</code> flag (short for <code class="highlight">--publish</code>) creates a port mapping between the host and the container. The <code class="highlight">-p</code> flag take a string value in the format of <code class="highlight">HOST:CONTAINER</code>, where the <code class="highlight">HOST</code> is the address on the host, and <code class="highlight">CONTAINER</code> is the port on the container. The command shown here publishes the container’s port 3000 to <code class="highlight">127.0.0.1:3000</code> (<code class="highlight">localhost:3000</code>) on the host. Without the port mapping, you wouldn’t be able to access the application from the host.</p>
+                    </li>
+                    <li>
+                        <p>After a few seconds, open your web browser to <span class="highlight">http://localhost:3000</span>. You should see your app.</p>
+                        <div>
+                            <img src="https://docs.docker.com/get-started/images/todo-list-empty.png" alt="screenshot of a to-do app running with docker">
+                        </div>
+                    </li>
+                    <li>
+                        <p>Go ahead and add an item or two and see that it works as you expect. You can mark items as complete and remove them. Your frontend is successfully storing items in the backend.</p>
+                    </li>
+                </ol>
+                <p>At this point, you should have a running todo list manager with a few items, all built by you.</p>
+            </article>
+        </section>
+
         </main>
     </body>
 </html>
